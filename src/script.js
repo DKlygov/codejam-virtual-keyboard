@@ -8,6 +8,8 @@ function generateElements() {
   const keyboardWindow = document.createElement('textarea');
   keyboardWindow.className = 'keyboardWindow';
   container.appendChild(keyboardWindow);
+
+  
 }
 
 

@@ -1,5 +1,7 @@
 class Keyboard {
-    constructor () {
-        
+  constructor() {
+    function typeLetter() {
+    
     }
+  }
 }
