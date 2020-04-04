@@ -1,5 +1,3 @@
-window.addEventListener('load', generateElements());
-
 // Generates all HTML document at once
 
 function generateElements() {
@@ -13,15 +11,4 @@ function generateElements() {
 }
 
 
-// Class Button
-
-class Button {
-  constructor(buttonValue, buttonType) {
-    this.buttonValue = buttonValue;
-    this.buttonType = buttonType;
-  }
-
-  typeInInput() {
-    return keyboardWindow.value = this.buttonValue;
-  }
-}
+window.addEventListener('load', generateElements());
