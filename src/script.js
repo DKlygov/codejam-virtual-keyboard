@@ -1,3 +1,4 @@
+
 // Generates all HTML document at once
 
 function generateElements() {
@@ -9,8 +10,11 @@ function generateElements() {
   keyboardWindow.className = 'keyboardWindow';
   container.appendChild(keyboardWindow);
 
-  
+  const keybed = document.createElement('div');
+  keybed.className = 'keybed';
+  container.appendChild(keybed);
 }
 
 
 window.addEventListener('load', generateElements());
+
