@@ -31,5 +31,3 @@ function generateKeys() {
 window.addEventListener('load', generateElements());
 
 window.addEventListener('load', generateKeys());
-
-console.log (ruKeysUnshifted.length)
