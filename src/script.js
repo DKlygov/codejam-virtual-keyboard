@@ -41,14 +41,14 @@ document.onkeydown = function (event) {
     keyboardWindow.focus();
   }
 
-  if (event.key !== 'Backspace' && event.key !== 'Delete' && event.key && 'ArrowUp' && event.key && 'ArrowDown' && event.key !== 'ArrowLeft' && event.key !== 'ArrowRight' && event.key !== 'Enter' && event.key !== 'Control' && event.key !== 'Alt' && event.key !== 'CapsLock' && event.key !== 'Tab' && event.key !== 'Meta') {
+  if (event.key !== 'Backspace' && event.key !== 'Delete' && event.key && 'ArrowUp' && event.key && 'ArrowDown' && event.key !== 'ArrowLeft' && event.key !== 'ArrowRight' && event.key !== 'Enter' && event.key !== 'Control' && event.key !== 'Alt' && event.key !== 'CapsLock' && event.key !== 'Tab' && event.key !== 'Meta' && event.key !== 'Shift') {
     keyboardWindow.blur();
     const keytopress = document.getElementById(event.keyCode);
     keyboardWindow.value += keytopress.querySelector('#on').textContent;
     keyboardWindow.blur();
   }
 
-  if (event.shiftKey && event.altKey) {
+  if (event.altKey && event.shiftKey) {
     const currentKeys = document.getElementsByClassName('ruKeysUnshifted');
     const newKeys = document.getElementsByClassName('enKeysUnshifted');
     for (let i = 0; i < currentKeys.length; i++) {
@@ -59,7 +59,7 @@ document.onkeydown = function (event) {
     }
   }
 
-  if (event.key === 'Shift' && document.getElementsByClassName('ruKeysUnshifted') === 'on') {
+  if (event.shiftKey && !event.altKey && !event.altKey) {
     const currentKeys = document.getElementsByClassName('ruKeysUnshifted');
     const newKeys = document.getElementsByClassName('ruKeysShifted');
     for (let i = 0; i < currentKeys.length; i++) {
