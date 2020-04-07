@@ -1,4 +1,3 @@
-
 const ruKeysUnshifted = ['ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Delete', 'Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', '\\', 'CapsLock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э', 'Enter', 'Shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '.', 'Shift', '↑', 'Control', 'Meta', 'Alt', ' ', '←', '↓', '→'];
 const ruKeysShifted = ['Ё', '!', '"', '№', ';', '%', ':', '?', '*', '(', ')', '_', '+', 'Backspace', 'Delete', 'Tab', 'Й', 'Ц', 'У', 'К', 'Е', 'Н', 'Г', 'Ш', 'Щ', 'З', 'Х', 'Ъ', '/', 'CapsLock', 'Ф', 'Ы', 'В', 'А', 'П', 'Р', 'О', 'Л', 'Д', 'Ж', 'Э', 'Enter', 'Shift', 'Я', 'Ч', 'С', 'М', 'И', 'Т', 'Ь', 'Б', 'Ю', ',', 'Shift', '↑', 'Control', 'Meta', 'Alt', ' ', '←', '↓', '→'];
 const enKeysUnshifted = ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Delete', 'Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\', 'CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "'", 'Enter', 'Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', 'Shift', '↑', 'Control', 'Meta', 'Alt', ' ', '←', '↓', '→'];
@@ -40,7 +39,7 @@ window.addEventListener('load', generateKeys());
 
 
 document.onkeydown = function keyPressed(event) {
-  document.getElementById(event.keyCode).style.cssText = 'color: #161616; background-color: #ffffff; transition: 0.1s linear'; // start animation
+  document.getElementById(event.keyCode).style.cssText = 'color: #161616; background-color: #ffffff; transition: 0.1s linear; border-radius: 30px;'; // start animation
 
   // if key is not a letter - focus on input
   if (event.key === 'Backspace' || event.key === 'Delete' || event.key === 'ArrowUp' || event.key === 'ArrowDown' || event.key === 'ArrowLeft' || event.key === 'ArrowRight' || event.key === 'Enter') {
@@ -147,7 +146,7 @@ document.onkeydown = function keyPressed(event) {
 
 document.onkeyup = function keyUnpressed(event) {
   // get back to standart color of a button
-  document.getElementById(event.keyCode).style.cssText = 'color: #ffffff; background-color: #161616; transition: 0.1s linear';
+  document.getElementById(event.keyCode).style.cssText = 'color: #ffffff; background-color: #161616; transition: 0.1s linear; border-radius: 10px; ';
   if (event.key === 'Shift') {
     if (event.key === 'Shift' && ruLangShifted[0].id === 'on') {
       for (let i = 0; i < ruLang.length; i++) {
@@ -168,6 +167,42 @@ document.onkeyup = function keyUnpressed(event) {
 };
 
 
-keybed.onclick = function (event) {
-  const { target } = event;
+keybed.onmousedown = function mouseClick(event) {
+  if (event.target.tagName === 'SPAN') {
+    const key = event.target.closest('div');
+    const insideKey = event.target.textContent;
+    const eventToDispatch = new KeyboardEvent('keydown', { keyCode: key.id, key: insideKey });
+    document.dispatchEvent(eventToDispatch);
+  } else {
+    const key = event.target;
+    const insideKey = key.getElementsByTagName('SPAN');
+    let mySpan;
+    for (let i = 0; i < insideKey.length; i++) {
+      if (insideKey[i].id === 'on') {
+        mySpan = insideKey[i].textContent;
+      }
+    }
+    const eventToDispatch = new KeyboardEvent('keydown', { keyCode: key.id, key: mySpan});
+    document.dispatchEvent(eventToDispatch);
+  }
+};
+
+keybed.onmouseup = function mouseUnclick(event) {
+  if (event.target.tagName === 'SPAN') {
+    const key = event.target.closest('div');
+    const insideKey = event.target.textContent;
+    const eventToDispatch = new KeyboardEvent('keyup', { keyCode: key.id, key: insideKey });
+    document.dispatchEvent(eventToDispatch);
+  } else {
+    const key = event.target;
+    const insideKey = key.getElementsByTagName('SPAN');
+    let mySpan;
+    for (let i = 0; i < insideKey.length; i++) {
+      if (insideKey[i].id === 'on') {
+        mySpan = insideKey[i].textContent;
+      }
+    }
+    const eventToDispatch = new KeyboardEvent('keyup', { keyCode: key.id, key: mySpan});
+    document.dispatchEvent(eventToDispatch);
+  }
 };
