@@ -10,6 +10,11 @@ const container = document.createElement('div');
 const keyboardWindow = document.createElement('textarea');
 const keybed = document.createElement('div');
 
+const ruLang = document.getElementsByClassName('ruKeysUnshifted');
+const enLang = document.getElementsByClassName('enKeysUnshifted');
+const ruLangShifted = document.getElementsByClassName('ruKeysShifted');
+const enLangShifted = document.getElementsByClassName('enKeysShifted');
+
 function generateElements() {
   container.className = 'container';
   document.body.appendChild(container);
@@ -34,13 +39,14 @@ window.addEventListener('load', generateElements());
 window.addEventListener('load', generateKeys());
 
 
-document.onkeydown = function (event) {
-  document.getElementById(event.keyCode).style.cssText = 'color: #161616; background-color: #ffffff; transition: 0.1s linear';
+document.onkeydown = function keyPressed(event) {
+  document.getElementById(event.keyCode).style.cssText = 'color: #161616; background-color: #ffffff; transition: 0.1s linear'; // start animation
 
+  // if key is not a letter - focus on input
   if (event.key === 'Backspace' || event.key === 'Delete' || event.key === 'ArrowUp' || event.key === 'ArrowDown' || event.key === 'ArrowLeft' || event.key === 'ArrowRight' || event.key === 'Enter') {
     keyboardWindow.focus();
   }
-
+  // if key is letter - focus on input
   if (event.key !== 'Backspace' && event.key !== 'Delete' && event.key && 'ArrowUp' && event.key && 'ArrowDown' && event.key !== 'ArrowLeft' && event.key !== 'ArrowRight' && event.key !== 'Enter' && event.key !== 'Control' && event.key !== 'Alt' && event.key !== 'CapsLock' && event.key !== 'Tab' && event.key !== 'Meta' && event.key !== 'Shift') {
     keyboardWindow.blur();
     const keytopress = document.getElementById(event.keyCode);
@@ -48,63 +54,115 @@ document.onkeydown = function (event) {
     keyboardWindow.blur();
   }
 
-  if (event.altKey && event.shiftKey) {
-    const currentKeys = document.getElementsByClassName('ruKeysUnshifted');
-    const newKeys = document.getElementsByClassName('enKeysUnshifted');
-    for (let i = 0; i < currentKeys.length; i++) {
-      currentKeys[i].removeAttribute('id');
-      currentKeys[i].setAttribute('id', 'off');
-      newKeys[i].removeAttribute('id');
-      newKeys[i].setAttribute('id', 'on');
+  // switch lang
+  if (event.altKey && event.ctrlKey) {
+    const ruLang = document.getElementsByClassName('ruKeysUnshifted');
+    const enLang = document.getElementsByClassName('enKeysUnshifted');
+    if (ruLang[0].id === 'on') {
+      for (let i = 0; i < ruLang.length; i++) {
+        ruLang[i].removeAttribute('id');
+        ruLang[i].setAttribute('id', 'off');
+        enLang[i].removeAttribute('id');
+        enLang[i].setAttribute('id', 'on');
+      }
+    } else {
+      for (let i = 0; i < ruLang.length; i++) {
+        ruLang[i].removeAttribute('id');
+        ruLang[i].setAttribute('id', 'on');
+        enLang[i].removeAttribute('id');
+        enLang[i].setAttribute('id', 'off');
+      }
     }
   }
 
-  if (event.shiftKey && !event.altKey && !event.altKey) {
-    const currentKeys = document.getElementsByClassName('ruKeysUnshifted');
-    const newKeys = document.getElementsByClassName('ruKeysShifted');
-    for (let i = 0; i < currentKeys.length; i++) {
-      currentKeys[i].removeAttribute('id');
-      currentKeys[i].setAttribute('id', 'off');
-      newKeys[i].removeAttribute('id');
-      newKeys[i].setAttribute('id', 'on');
+
+  // Capslock
+  if (event.key === 'CapsLock') {
+    if (event.key === 'CapsLock' && ruLang[0].id === 'on') {
+      for (let i = 0; i < ruLang.length; i++) {
+        ruLang[i].removeAttribute('id');
+        ruLang[i].setAttribute('id', 'off');
+        ruLangShifted[i].removeAttribute('id');
+        ruLangShifted[i].setAttribute('id', 'on');
+        enLang[i].removeAttribute('id');
+        enLang[i].setAttribute('id', 'off');
+        enLangShifted[i].removeAttribute('id');
+        enLangShifted[i].setAttribute('id', 'off');
+      }
+    } else if (event.key === 'CapsLock' && ruLangShifted[0].id === 'on') {
+      for (let i = 0; i < ruLang.length; i++) {
+        ruLang[i].removeAttribute('id');
+        ruLang[i].setAttribute('id', 'on');
+        ruLangShifted[i].removeAttribute('id');
+        ruLangShifted[i].setAttribute('id', 'off');
+        enLang[i].removeAttribute('id');
+        enLang[i].setAttribute('id', 'off');
+        enLangShifted[i].removeAttribute('id');
+        enLangShifted[i].setAttribute('id', 'off');
+      }
+    } else if (event.key === 'CapsLock' && enLang[0].id === 'on') {
+      for (let i = 0; i < ruLang.length; i++) {
+        enLang[i].removeAttribute('id');
+        enLang[i].setAttribute('id', 'off');
+        enLangShifted[i].removeAttribute('id');
+        enLangShifted[i].setAttribute('id', 'on');
+        ruLang[i].removeAttribute('id');
+        ruLang[i].setAttribute('id', 'off');
+        ruLangShifted[i].removeAttribute('id');
+        ruLangShifted[i].setAttribute('id', 'off');
+      }
+    } else if (event.key === 'CapsLock' && enLangShifted[0].id === 'on') {
+      for (let i = 0; i < ruLang.length; i++) {
+        enLang[i].removeAttribute('id');
+        enLang[i].setAttribute('id', 'on');
+        enLangShifted[i].removeAttribute('id');
+        enLangShifted[i].setAttribute('id', 'off');
+        ruLang[i].removeAttribute('id');
+        ruLang[i].setAttribute('id', 'off');
+        ruLangShifted[i].removeAttribute('id');
+        ruLangShifted[i].setAttribute('id', 'off');
+      }
     }
   }
 
-
-  if (event.key === 'CapsLock' && document.getElementsByClassName('ruKeysUnshifted').id === 'on') {
-    const currentKeys = document.getElementsByClassName('ruKeysUnshifted');
-    const newKeys = document.getElementsByClassName('ruKeysShifted');
-    for (let i = 0; i < currentKeys.length; i++) {
-      currentKeys[i].removeAttribute('id');
-      currentKeys[i].setAttribute('id', 'off');
-      newKeys[i].removeAttribute('id');
-      newKeys[i].setAttribute('id', 'on');
-    }
-  }
-
-  if (event.key === 'CapsLock' && document.getElementsByClassName('ruKeysShifted').id === 'on') {
-    const currentKeys = document.getElementsByClassName('ruKeysUnshifted');
-    const newKeys = document.getElementsByClassName('ruKeysShifted');
-    for (let i = 0; i < currentKeys.length; i++) {
-      currentKeys[i].removeAttribute('id');
-      currentKeys[i].setAttribute('id', 'on');
-      newKeys[i].removeAttribute('id');
-      newKeys[i].setAttribute('id', 'off');
+  // Shift
+  if (event.key === 'Shift') {
+    if (event.key === 'Shift' && ruLang[0].id === 'on') {
+      for (let i = 0; i < ruLang.length; i++) {
+        ruLang[i].removeAttribute('id');
+        ruLang[i].setAttribute('id', 'off');
+        ruLangShifted[i].removeAttribute('id');
+        ruLangShifted[i].setAttribute('id', 'on');
+      }
+    } else if (event.key === 'Shift' && enLang[0].id === 'on') {
+      for (let i = 0; i < ruLang.length; i++) {
+        enLang[i].removeAttribute('id');
+        enLang[i].setAttribute('id', 'off');
+        enLangShifted[i].removeAttribute('id');
+        enLangShifted[i].setAttribute('id', 'on');
+      }
     }
   }
 };
 
-
-document.onkeyup = function (event) {
+document.onkeyup = function keyUnpressed(event) {
+  // get back to standart color of a button
   document.getElementById(event.keyCode).style.cssText = 'color: #ffffff; background-color: #161616; transition: 0.1s linear';
-  if (event.key === 'Shift' && document.getElementsByClassName('ruKeysShifted').id === 'on') {
-    const currentKeys = document.getElementsByClassName('ruKeysUnshifted');
-    const newKeys = document.getElementsByClassName('ruKeysShifted');
-    for (let i = 0; i < currentKeys.length; i++) {
-      currentKeys[i].removeAttribute('id');
-      currentKeys[i].setAttribute('id', 'on');
-      newKeys[i].removeAttribute('id');
-      newKeys[i].setAttribute('id', 'off');
+  if (event.key === 'Shift') {
+    if (event.key === 'Shift' && ruLangShifted[0].id === 'on') {
+      for (let i = 0; i < ruLang.length; i++) {
+        ruLang[i].removeAttribute('id');
+        ruLang[i].setAttribute('id', 'on');
+        ruLangShifted[i].removeAttribute('id');
+        ruLangShifted[i].setAttribute('id', 'off');
+      }
+    } else if (event.key === 'Shift' && enLangShifted[0].id === 'on') {
+      for (let i = 0; i < ruLang.length; i++) {
+        enLang[i].removeAttribute('id');
+        enLang[i].setAttribute('id', 'on');
+        enLangShifted[i].removeAttribute('id');
+        enLangShifted[i].setAttribute('id', 'off');
+      }
     }
   }
 };
